@@ -1,0 +1,56 @@
+services:
+  jardin-actuel-bdd:
+    container_name: jardin-actuel-bdd
+    image: mariadb:11.7.2
+    environment:
+      - MYSQL_DATABASE=jardin_actuel
+      - MYSQL_ROOT_PASSWORD=jardin
+      - MYSQL_USER=jardin
+      - MYSQL_PASSWORD=jardin
+    volumes:
+      - ./data:/docker-entrypoint-initdb.d
+      - ./mysql:/var/lib/mysql
+    networks:
+      - symfony
+    healthcheck:
+      test: ['CMD', '/usr/local/bin/healthcheck.sh', '--innodb_initialized']
+      start_period: 15s
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  jardin-actuel-symfony:
+    container_name: jardin-actuel-symfony
+    image: ghcr.io/oc-for-students/jardin-actuel-backend:2-0-0
+    ports:
+      - 8081:8081    
+    environment:
+      - DATABASE_URL=mysql://root:jardin@jardin-actuel-bdd:3306/jardin_actuel?serverVersion=8&charset=utf8mb4
+    depends_on:
+      jardin-actuel-bdd:
+        condition: service_healthy
+    networks:
+      - symfony
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  jardin-actuel-angular:
+    container_name: jardin-actuel-angular
+    image: ghcr.io/oc-for-students/jardin-actuel-frontend:2-0-0
+    ports:
+      - 8080:80    
+    networks:
+      - symfony
+    depends_on:
+      jardin-actuel-symfony:
+        condition: service_healthy
+      
+networks:
+  symfony:
+  
+volumes:
+  data:
