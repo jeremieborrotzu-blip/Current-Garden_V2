@@ -21,7 +21,7 @@ services:
 
   jardin-actuel-symfony:
     container_name: jardin-actuel-symfony
-    image: ghcr.io/oc-for-students/jardin-actuel-backend:2-0-0
+    image: ghcr.io/openclassrooms-student-center/jardin-actuel-backend:2-0-0
     ports:
       - 8081:8081    
     environment:
@@ -40,7 +40,7 @@ services:
 
   jardin-actuel-angular:
     container_name: jardin-actuel-angular
-    image: ghcr.io/oc-for-students/jardin-actuel-frontend:2-0-0
+    image: ghcr.io/openclassrooms-student-center/jardin-actuel-frontend:2-0-0
     ports:
       - 8080:80    
     networks:
