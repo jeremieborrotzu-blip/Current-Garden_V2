@@ -1,12 +1,12 @@
 services:
-  jardin-actuel-bdd:
-    container_name: jardin-actuel-bdd
+  current-garden-db:
+    container_name: current-garden-db
     image: mariadb:11.7.2
     environment:
-      - MYSQL_DATABASE=jardin_actuel
-      - MYSQL_ROOT_PASSWORD=jardin
-      - MYSQL_USER=jardin
-      - MYSQL_PASSWORD=jardin
+      - MYSQL_DATABASE=current_garden
+      - MYSQL_ROOT_PASSWORD=garden
+      - MYSQL_USER=garden
+      - MYSQL_PASSWORD=garden
     volumes:
       - ./data:/docker-entrypoint-initdb.d
       - ./mysql:/var/lib/mysql
@@ -19,15 +19,15 @@ services:
       timeout: 10s
       retries: 5
 
-  jardin-actuel-symfony:
-    container_name: jardin-actuel-symfony
-    image: ghcr.io/openclassrooms-student-center/jardin-actuel-backend:2-0-0
+  current-garden-symfony:
+    container_name: current-garden-symfony
+    image: ghcr.io/openclassrooms-student-center/current-garden-backend:2-0-0
     ports:
       - 8081:8081    
     environment:
-      - DATABASE_URL=mysql://root:jardin@jardin-actuel-bdd:3306/jardin_actuel?serverVersion=8&charset=utf8mb4
+      - DATABASE_URL=mysql://root:garden@current-garden-db:3306/current_garden?serverVersion=8&charset=utf8mb4
     depends_on:
-      jardin-actuel-bdd:
+      current-garden-db:
         condition: service_healthy
     networks:
       - symfony
@@ -38,15 +38,15 @@ services:
       retries: 3
       start_period: 30s
 
-  jardin-actuel-angular:
-    container_name: jardin-actuel-angular
-    image: ghcr.io/openclassrooms-student-center/jardin-actuel-frontend:2-0-0
+  current-garden-angular:
+    container_name: current-garden-angular
+    image: ghcr.io/openclassrooms-student-center/current-garden-frontend:2-0-0
     ports:
       - 8080:80    
     networks:
       - symfony
     depends_on:
-      jardin-actuel-symfony:
+      current-garden-symfony:
         condition: service_healthy
       
 networks:
