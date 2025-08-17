@@ -1,6 +1,6 @@
-<div align="center">
+markdown<div align="center">
 
-# OpenClassrooms - Jardin-Actuel
+# OpenClassrooms - Current Garden
 </div>
 
 <p align="center">
@@ -11,36 +11,36 @@
   <br><br><br>
 </p>
 
-# Prérequis
-Pour démarrer cet applicatif web vous devez avoir les outils suivants:
+# Prerequisites
+To start this web application you must have the following tools:
 - Docker
 
-# Installation and démarrage
-Clonez le projet pour le récupérer
+# Installation and startup
+Clone the project to retrieve it
 ``` 
-git clone https://github.com/OpenClassrooms-Student-Center/Jardin-Actuel-V2.git
-cd Jardin-Actuel-V2
+git clone https://github.com/OpenClassrooms-Student-Center/Current-Garden-V2.git
+cd Current-Garden-V2
 ```
-Pour démarrer le projet
+To start the project
 ```
 docker compose up -d
 ```
 
 
-## Pour éteindre le projet
-Assurez vous d'être dans le dossier du projet (là où se trouve le fichier docker-compose.yml)
+## To shut down the project
+Make sure you are in the project folder (where the docker-compose.yml file is located)
 
 ```
 docker compose down
 ```
 
-## Fin de travail
-Si vous ne revenez pas sur le projet, vous avez la possibilité de supprimer les fichiers et images Docker afin de récupérer la place
+## End of work
+If you are not returning to the project, you have the option to delete Docker files and images to reclaim space
 
-Attention cela supprime tous les projets Docker de votre ordinateur
+Warning: this deletes all Docker projects from your computer
 
 ```
 docker system prune -a
 
-=> tapez Y puis Entrée
+=> type Y then Enter
 ```
